@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>youweather</title>
+  </head>
+  <body>
+     <div class="container">
+        <header>
+            <h1 class="header-title">YouWeather</h1>
+            <p class="header-subtitle">Weather Forecast & Agricultural Education</p>
+        </header>
+
+        <!-- Search Card -->
+        <div class="glass-card">
+            <div class="section-title">
+                <i class='bx bx-search'></i> Check the Weather
+            </div>
+            <form id="weatherForm" class="search-form">
+                <input type="text" id="cityInput" class="input-field" placeholder="Enter city name...">
+                <input type="text" id="provinceInput" class="input-field" placeholder="Province (optional)">
+                <button type="submit" class="btn btn-primary"><i class='bx bx-search'></i> Search</button>
+                <button id="locationBtn" type="button" class="btn"><i class='bx bx-current-location'></i> My Location</button>
+            </form>
+            <p class="search-hint">💡 Tip: Enter city and province for the most accurate results</p>
+        </div>
+
+        <!-- Weather Display Grid -->
+        <div class="weather-grid">
+            <div class="glass-card weather-card-main" id="weatherResults"></div>
+            <div class="glass-card" id="weatherResults2"></div>
+        </div>
+
+        <!-- Advisory Box -->
+        <div class="advisory-box" id="advisory">
+            <i class='bx bx-info-circle advisory-icon'></i>
+            <div class="advisory-content">
+                <div class="advisory-label">Farming Advisory</div>
+                <p>Select a location to view personalized agricultural advisories</p>
+            </div>
+        </div>
+
+        <!-- 7-Day Forecast -->
+        <div class="glass-card">
+            <div class="section-title">
+                <i class='bx bx-calendar'></i> 7-Day Forecast
+            </div>
+            <div class="forecast-grid" id="weeklyForecast"></div>
+        </div>
+
+        <!-- Hourly Forecast -->
+        <div class="glass-card">
+            <div class="section-title">
+                <i class='bx bx-time-five'></i> Hourly Forecast
+            </div>
+            <div class="hourly-scroll" id="hourlyForecast"></div>
+        </div>
+
+        <!-- Pinned Locations -->
+        <div class="glass-card">
+            <div class="section-title">
+                <i class='bx bx-map-pin'></i> Pinned Locations
+            </div>
+            <div id="pinnedLocations" class="pinned-container"></div>
+        </div>
+
+        <!-- Education Section -->
+        <div class="education-section">
+            <div class="section-title">
+                <i class='bx bx-book-open'></i> Weather & Agriculture Learning Guide
+            </div>
+            
+            <div class="guide-grid">
+                <!-- Pressure Guide -->
+                <div class="guide-card">
+                    <div class="guide-title">
+                        <i class='bx bx-bar-chart-alt-2'></i> Atmospheric Pressure (hPa)
+                    </div>
+                    <ul class="guide-list">
+                        <li><span><strong>🔻 Below 1000 hPa:</strong> Low pressure systems bring rain and storms. Monitor crop irrigation schedules.</span></li>
+                        <li><span><strong>🔺 1000-1015 hPa:</strong> Transitional pressure - variable weather conditions.</span></li>
+                        <li><span><strong>🔺 Above 1015 hPa:</strong> High pressure systems ensure clear, dry weather. Ideal for field work and harvesting.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Humidity Guide -->
+                <div class="guide-card">
+                    <div class="guide-title">
+                        <i class='bx bx-droplet'></i> Humidity Level (%)
+                    </div>
+                    <ul class="guide-list">
+                        <li><span><strong>🌿 Below 40%:</strong> Dry air - plants lose moisture rapidly. Increase watering frequency.</span></li>
+                        <li><span><strong>💧 40-70%:</strong> Moderate humidity - optimal range for most crops.</span></li>
+                        <li><span><strong>🌧️ Above 80%:</strong> High humidity risk - watch for fungal diseases, mold, and pest infestations.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Precipitation Guide -->
+                <div class="guide-card">
+                    <div class="guide-title">
+                        <i class='bx bx-cloud-rain'></i> Precipitation (mm)
+                    </div>
+                    <ul class="guide-list">
+                        <li><span><strong>0 mm:</strong> No rainfall expected.</span></li>
+                        <li><span><strong>1-5 mm:</strong> Light rain - gentle watering, slightly moistens soil.</span></li>
+                        <li><span><strong>5-10 mm:</strong> Moderate rain - adequate moisture for crops.</span></li>
+                        <li><span><strong>10-20 mm:</strong> Heavy rain - noticeable wet conditions, check drainage.</span></li>
+                        <li><span><strong>20+ mm:</strong> Very heavy rain - potential flooding risk, secure equipment.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Rain Chance Guide -->
+                <div class="guide-card">
+                    <div class="guide-title">
+                        <i class='bx bx-water'></i> Rain Probability (%)
+                    </div>
+                    <ul class="guide-list">
+                        <li><span><strong>0-20%:</strong> Very unlikely to rain - proceed with outdoor plans.</span></li>
+                        <li><span><strong>30-50%:</strong> Possible scattered showers - have backup plans ready.</span></li>
+                        <li><span><strong>60-80%:</strong> Likely rain - bring umbrella ☂️ and secure crops.</span></li>
+                        <li><span><strong>90-100%:</strong> Almost certain rain - postpone fieldwork, prepare for storms.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Wind Speed Guide -->
+                <div class="guide-card">
+                    <div class="guide-title">
+                        <i class='bx bx-wind'></i> Wind Speed (Km/H)
+                    </div>
+                    <ul class="guide-list">
+                        <li><span><strong>0-10 Km/H:</strong> Calm/Light winds - safe for all agricultural activities.</span></li>
+                        <li><span><strong>10-20 Km/H:</strong> Moderate winds - suitable for most field operations.</span></li>
+                        <li><span><strong>20-40 Km/H:</strong> Strong winds - crops may be stressed, secure structures.</span></li>
+                        <li><span><strong>40+ Km/H:</strong> Very strong winds/storms - do not work outdoors, protect equipment.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Temperature Guide -->
+                <div class="guide-card">
+                    <div class="guide-title">
+                        <i class='bx bx-thermometer'></i> Temperature (°C)
+                    </div>
+                    <ul class="guide-list">
+                        <li><span><strong>Below 0°C:</strong> Frost risk - protect sensitive plants and crops from freezing.</span></li>
+                        <li><span><strong>0-10°C:</strong> Cold - slow growth, ideal for cool-season crops.</span></li>
+                        <li><span><strong>10-25°C:</strong> Comfortable range - optimal growing conditions for most crops.</span></li>
+                        <li><span><strong>Above 35°C:</strong> Extreme heat - protect livestock, increase irrigation, apply mulch.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Key Concepts -->
+            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                <h3 style="color: var(--accent-cyan); margin-bottom: 1rem; font-size: 1.25rem;">
+                    <i class='bx bx-lightbulb' style="margin-right: 0.5rem;"></i> Key Concepts
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                    <div style="background: rgba(59, 130, 246, 0.1); padding: 1.5rem; border-radius: 1rem; border-left: 4px solid var(--accent-blue);">
+                        <p style="color: var(--text-secondary);"><strong style="color: var(--accent-blue);">📊 Precipitation vs Rain Chance:</strong> Precipitation shows how much rain will fall (mm). Rain Chance shows the probability it will rain (%).</p>
+                    </div>
+                    <div style="background: rgba(6, 182, 212, 0.1); padding: 1.5rem; border-radius: 1rem; border-left: 4px solid var(--accent-cyan);">
+                        <p style="color: var(--text-secondary);"><strong style="color: var(--accent-cyan);">💡 Example Scenarios:</strong> 20% chance & 0mm = Cloudy but dry. 80% chance & 5mm = Light rain likely. 90% chance & 30mm = Heavy rain expected.</p>
+                    </div>
+                    <div style="background: rgba(34, 197, 94, 0.1); padding: 1.5rem; border-radius: 1rem; border-left: 4px solid var(--success);">
+                        <p style="color: var(--text-secondary);"><strong style="color: var(--success);">🌾 Agricultural Focus:</strong> Use this data to plan irrigation, pest management, harvesting, and crop protection strategies.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
