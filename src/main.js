@@ -304,19 +304,20 @@ function getWeeklyForecast(lat, lon) {
 
 function getFriendlyWeatherDescription(description) {
   const weatherMapping = {
-    "clear sky": { text: "Clear Sky", image: "images/v1/sunny.png" },
-    "few clouds": { text: "Mostly Sunny", image: "images/v1/sunny_s_cloudy.png" },
-    "scattered clouds": { text: "Partly Cloudy", image: "images/v1/partly_cloudy.png" },
-    "broken clouds": { text: "Cloudy", image: "images/v1/cloudy_s_sunny.png" },
-    "overcast clouds": { text: "Overcast", image: "images/v1/cloudy.png" },
-    "light rain": { text: "Light Rain", image: "images/v1/rain_light.png" },
-    "moderate rain": { text: "Moderate Rain", image: "images/v1/rain.png" },
-    "heavy intensity rain": { text: "Heavy Rain", image: "images/v1/rain_heavy.png" },
-    "thunderstorm": { text: "⚡ Thunderstorm", image: "images/v1/thunderstorms.png" },
+    "clear sky": { text: "Clear Sky", image: "/images/v1/sunny.png" },
+    "few clouds": { text: "Mostly Sunny", image: "/images/v1/sunny_s_cloudy.png" },
+    "scattered clouds": { text: "Partly Cloudy", image: "/images/v1/partly_cloudy.png" },
+    "broken clouds": { text: "Cloudy", image: "/images/v1/cloudy_s_sunny.png" },
+    "overcast clouds": { text: "Overcast", image: "/images/v1/cloudy.png" },
+    "light rain": { text: "Light Rain", image: "/images/v1/rain_light.png" },
+    "moderate rain": { text: "Moderate Rain", image: "/images/v1/rain.png" },
+    "heavy intensity rain": { text: "Heavy Rain", image: "/images/v1/rain_heavy.png" },
+    "thunderstorm": { text: "⚡ Thunderstorm", image: "/images/v1/thunderstorms.png" },
   };
 
-  return weatherMapping[description.toLowerCase()] || { text: description, image: "images/v1/default.png" };
+  return weatherMapping[description.toLowerCase()] || { text: description, image: "/images/v1/default.png" };
 }
+
 
 // Pinned Locations
 const pinLimit = 3;
