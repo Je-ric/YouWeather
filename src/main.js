@@ -387,3 +387,10 @@ function displayPinnedLocations() {
 }
 
 document.addEventListener("DOMContentLoaded", displayPinnedLocations);
+
+// expose functions used by inline onclick handlers so HTML can call them
+// pag wala, hindi pwede since its external
+window.pinLocation = pinLocation;
+window.removePinnedLocation = removePinnedLocation;
+window.getWeatherByCoords = getWeatherByCoords;
+window.isPinned = isPinned;
