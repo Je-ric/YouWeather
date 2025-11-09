@@ -371,7 +371,7 @@ function displayPinnedLocations() {
     locationDiv.innerHTML = `
                     <div>
                         <div class="pinned-name">${loc.name}</div>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">Tap to view forecast</p>
+                        
                     </div>
                     <div class="pinned-actions">
                         <button onclick="getWeatherByCoords(${loc.lat}, ${loc.lon})" class="btn btn-small btn-primary">

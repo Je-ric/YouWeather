@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>youweather</title>
   </head>
   <body>
@@ -61,8 +63,9 @@
         <!-- Pinned Locations -->
         <div class="glass-card">
             <div class="section-title">
-                <i class='bx bx-map-pin'></i> Pinned Locations
+                <i class='bx bx-map-pin'></i> Pinned Locations (Max: 3)
             </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Tap to view forecast</p>
             <div id="pinnedLocations" class="pinned-container"></div>
         </div>
 
