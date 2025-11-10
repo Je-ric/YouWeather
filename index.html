@@ -94,19 +94,19 @@
 
     <div class="max-w-8xl mx-auto px-4 md:px-8 py-8 pt-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                <div class="bg-white/80 backdrop-blur-md border border-blue-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up relative overflow-hidden" 
+                <div class="bg-white/80 backdrop-blur-md border-2 border-blue-500 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up relative overflow-hidden" 
                     id="weatherResults">
                     <!--  -->
                 </div>
 
-                <div class="bg-white/80 backdrop-blur-md border border-blue-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up" 
+                <div class="bg-white/80 backdrop-blur-md border-2 border-blue-500 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up" 
                     id="weatherResults2">
                     <!--  -->
                     
                 </div>
             </div>
             
-            <div class="bg-white/80 backdrop-blur-md border border-blue-100 rounded-3xl p-8 mb-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up">
+            <div class="bg-white/80 backdrop-blur-md border-2 border-blue-500 rounded-3xl p-8 mb-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up">
                 <div class="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-800">
                     <i class='bx bx-map-pin text-cyan-500'></i> Pinned Locations (Max: 3)
                 </div>
@@ -114,22 +114,32 @@
                 <div id="pinnedLocations" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </div>
     
-            <div id="advisory" class="bg-gradient-to-r from-amber-50 to-green-50 border-l-4 border-amber-400 rounded-2xl p-6 mb-8 flex gap-4 items-start animate-slide-in-left" >
-                <i class='bx bx-info-circle text-3xl text-amber-500 flex-shrink-0 mt-1'></i>
+            <div id="advisory" 
+                class="bg-gradient-to-r from-amber-50 via-yellow-100 to-green-50 border-l-4 border-amber-400 rounded-3xl p-6 mb-8 flex gap-4 items-start shadow-md hover:shadow-lg transition-all duration-300 animate-slide-in-left">
+                
+                <div class="flex-shrink-0 mt-1">
+                    <div class="bg-amber-200/40 rounded-full p-3 flex items-center justify-center">
+                        <i class='bx bx-info-circle text-2xl text-amber-600'></i>
+                    </div>
+                </div>
+                
                 <div class="flex-1">
-                    <div class="font-bold text-gray-900 mb-2">Farming Advisory</div>
-                    <p class="text-gray-700 leading-relaxed">Select a location to view personalized agricultural advisories</p>
+                    <div class="font-extrabold text-gray-900 text-lg mb-2">🌾 Farming Advisory</div>
+                    <p class="text-gray-700 leading-relaxed text-sm sm:text-base">
+                        Select a location to view <span class="font-semibold text-amber-600">personalized agricultural advisories</span>.
+                    </p>
                 </div>
             </div>
 
-            <div class="bg-white/80 backdrop-blur-md border border-blue-100 rounded-3xl p-8 mb-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up">
+
+            <div class="bg-white/80 backdrop-blur-md border-2 border-blue-500 rounded-3xl p-8 mb-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up">
                 <div class="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-800">
                     <i class='bx bx-time-five text-cyan-500'></i> Hourly Forecast
                 </div>
                 <div class="flex gap-4 pb-4 scroll-smooth" id="hourlyForecast"></div>
             </div>
     
-            <div class="bg-white/80 backdrop-blur-md border border-blue-100 rounded-3xl p-8 mb-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up">
+            <div class="bg-white/80 backdrop-blur-md border-2 border-blue-500 rounded-3xl p-8 mb-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up">
                 <div class="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-800">
                     <i class='bx bx-calendar text-cyan-500'></i> 7-Day Forecast
                 </div>
@@ -155,9 +165,9 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-12">
-                <div class="bg-blue-50 border border-blue-200 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
+                <div class="bg-blue-50 border-2 border-blue-200 border-l-4 border-l-blue-500 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
                     <div class="text-xl font-bold text-cyan-600 mb-4 flex items-center gap-2">
-                        <i class='bx bx-bar-chart-alt-2'></i> Atmospheric Pressure (hPa)
+                        <i class='bx bx-bar-chart-alt-2'></i> Atmospheric Pressure (hPa)    
                     </div>
                     <ul class="space-y-3">
                         <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">🔻 Below 1000 hPa:</strong> Low pressure systems bring rain and storms. Monitor crop irrigation schedules.</span></li>
@@ -166,7 +176,7 @@
                     </ul>
                 </div>
 
-                <div class="bg-blue-50 border border-blue-200 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
+                <div class="bg-blue-50 border-2 border-cyan-200 border-l-4 border-l-cyan-500 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
                     <div class="text-xl font-bold text-cyan-600 mb-4 flex items-center gap-2">
                         <i class='bx bx-droplet'></i> Humidity Level (%)
                     </div>
@@ -177,7 +187,7 @@
                     </ul>
                 </div>
 
-                <div class="bg-blue-50 border border-blue-200 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
+                <div class="bg-blue-50 border-2 border-amber-200 border-l-4 border-l-amber-500 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
                     <div class="text-xl font-bold text-cyan-600 mb-4 flex items-center gap-2">
                         <i class='bx bx-cloud-rain'></i> Precipitation (mm)
                     </div>
@@ -190,7 +200,7 @@
                     </ul>
                 </div>
 
-                <div class="bg-blue-50 border border-blue-200 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
+                <div class="bg-blue-50 border-2 border-indigo-200 border-l-4 border-l-indigo-500 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
                     <div class="text-xl font-bold text-cyan-600 mb-4 flex items-center gap-2">
                         <i class='bx bx-water'></i> Rain Probability (%)
                     </div>
@@ -202,7 +212,7 @@
                     </ul>
                 </div>
 
-                <div class="bg-blue-50 border border-blue-200 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
+                <div class="bg-blue-50 border-2 border-purple-200 border-l-4 border-l-purple-500 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
                     <div class="text-xl font-bold text-cyan-600 mb-4 flex items-center gap-2">
                         <i class='bx bx-wind'></i> Wind Speed (Km/H)
                     </div>
@@ -214,7 +224,7 @@
                     </ul>
                 </div>
 
-                <div class="bg-blue-50 border border-blue-200 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
+                <div class="bg-blue-50 border-2 border-red-200 border-l-4 border-l-red-500 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
                     <div class="text-xl font-bold text-cyan-600 mb-4 flex items-center gap-2">
                         <i class='bx bx-thermometer'></i> Temperature (°C)
                     </div>
@@ -229,23 +239,47 @@
 
             <div class="pt-8 mt-8 border-t border-blue-200">
                 <h3 class="text-2xl font-bold text-cyan-600 mb-6 flex items-center gap-2">
-                    <i class='bx bx-lightbulb'></i> Key Concepts
+                    <i class='bx bx-light-bulb-alt'></i> Weather & Farming Insights
                 </h3>
                 <div class="grid grid-cols-1 gap-6">
-                    <div class="bg-blue-100 p-6 rounded-2xl border-l-4 border-blue-500">
-                        <p class="text-gray-800"><strong class="text-blue-600">📊 Precipitation vs Rain Chance:</strong> Precipitation shows how much rain will fall (mm). Rain Chance shows the probability it will rain (%).</p>
+                    <!-- Precipitation vs Rain Chance -->
+                    <div class="bg-gradient-to-r from-blue-100 to-blue-200 p-6 rounded-2xl border-l-4 border-blue-500 shadow-md hover:shadow-lg hover:-translate-y-1 transition-transform duration-300">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class='bx bx-bar-chart-alt-2 text-blue-600 text-2xl'></i>
+                            <span class="font-semibold text-blue-700 text-lg">Precipitation vs Rain Chance</span>
+                        </div>
+                        <p class="text-gray-800 text-sm leading-relaxed">
+                            Precipitation shows how much rain will fall (mm). Rain Chance shows the probability it will rain (%).
+                        </p>
                     </div>
-                    <div class="bg-cyan-100 p-6 rounded-2xl border-l-4 border-cyan-500">
-                        <p class="text-gray-800"><strong class="text-cyan-600">💡 Example Scenarios:</strong> 20% chance & 0mm = Cloudy but dry. 80% chance & 5mm = Light rain likely. 90% chance & 30mm = Heavy rain expected.</p>
+
+                    <!-- Example Scenarios -->
+                    <div class="bg-gradient-to-r from-cyan-50 to-cyan-100 p-6 rounded-2xl border-l-4 border-cyan-500 shadow-md hover:shadow-lg hover:-translate-y-1 transition-transform duration-300">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class='bx bx-notepad text-cyan-600 text-2xl'></i>
+                            <span class="font-semibold text-cyan-700 text-lg">Example Scenarios</span>
+                        </div>
+                        <p class="text-gray-800 text-sm leading-relaxed">
+                            20% chance & 0mm = Cloudy but dry. 80% chance & 5mm = Light rain likely. 90% chance & 30mm = Heavy rain expected.
+                        </p>
                     </div>
-                    <div class="bg-green-100 p-6 rounded-2xl border-l-4 border-green-500">
-                        <p class="text-gray-800"><strong class="text-green-600">🌾 Agricultural Focus:</strong> Use this data to plan irrigation, pest management, harvesting, and crop protection strategies.</p>
+
+                    <!-- Agricultural Focus -->
+                    <div class="bg-gradient-to-r from-green-50 to-green-100 p-6 rounded-2xl border-l-4 border-green-500 shadow-md hover:shadow-lg hover:-translate-y-1 transition-transform duration-300">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class='bx bx-leaf text-green-600 text-2xl'></i>
+                            <span class="font-semibold text-green-700 text-lg">Agricultural Focus</span>
+                        </div>
+                        <p class="text-gray-800 text-sm leading-relaxed">
+                            Use this data to plan irrigation, pest management, harvesting, and crop protection strategies.
+                        </p>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
     
     <script type="module" src="/src/main.js"></script>
-  </body>
+</body>
 </html>
