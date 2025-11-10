@@ -44,6 +44,10 @@ A modern web app that provides **weather forecasts** and **agricultural advisori
    - VITE_JOKE_KEY=your_api_key_here
 5. npm run dev
 
+Additional:
+   npm install -D tailwindcss@3 postcss autoprefixer
+   npx tailwindcss init -p
+
 ---
 
 ## Usage
