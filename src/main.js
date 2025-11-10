@@ -1,5 +1,9 @@
 import './style.css';
 
+function proxy(url) {
+  return `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
+}
+
 // const JOKE = import.meta.env.VITE_JOKE_KEY
 // const JOKE = import.meta.env.VITE_JOKE_KEY2
 const JOKE = "5de15b7804e0078404a629b6de093fb2"
@@ -38,7 +42,8 @@ function getWeather(city, province = "") {
     query = `${city},${province},PH`
   }
 
-  fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${JOKE}`)
+  // fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${JOKE}`)
+    fetch(proxy(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${JOKE}`))
     .then((res) => res.json())
     .then((locations) => {
       if (locations.length === 0) {
@@ -58,7 +63,9 @@ function getWeather(city, province = "") {
 }
 
 function getWeatherByCoords(lat, lon) {
-  fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${JOKE}&units=metric`)
+  // fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${JOKE}&units=metric`)
+  fetch(proxy(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${JOKE}&units=metric`))
+
     .then((res) => res.json())
     .then((data) => {
       displayWeather(data)
@@ -117,9 +124,9 @@ function displayWeather2(data) {
   const sunset = new Date(data.sys.sunset * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
   const precipitation = data.rain ? data.rain["1h"] || 0 : 0
 
-  fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=${JOKE}&units=metric`,
-  )
+  // fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=${JOKE}&units=metric`,)
+  fetch(proxy(`https://api.openweathermap.org/data/2.5/forecast?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=${JOKE}&units=metric`,))
+
     .then((res) => res.json())
     .then((forecastData) => {
       const rainChance = forecastData.list[0].pop ? (forecastData.list[0].pop * 100).toFixed(0) : "0"
@@ -300,7 +307,9 @@ function displayAdvisory(data, forecastData) {
 
 
 function displayHourlyForecast(lat, lon) {
-  fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${JOKE}&units=metric`)
+  // fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${JOKE}&units=metric`)
+  fetch(proxy(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${JOKE}&units=metric`))
+
     .then((res) => res.json())
     .then((data) => {
       hourlyForecast.innerHTML = ""
@@ -329,7 +338,9 @@ function displayHourlyForecast(lat, lon) {
 }
 
 function getWeeklyForecast(lat, lon) {
-  fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${JOKE}&units=metric`)
+  // fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${JOKE}&units=metric`)
+    fetch(proxy(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${JOKE}&units=metric`))
+
     .then((res) => res.json())
     .then((data) => {
       weeklyForecast.innerHTML = ""
