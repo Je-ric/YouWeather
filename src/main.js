@@ -236,13 +236,14 @@ function displayHourlyForecast(lat, lon) {
         const rainChance = hour.pop ? (hour.pop * 100).toFixed(0) : "0"
 
         hourlyForecast.innerHTML += `
-                            <div class="flex-shrink-0 bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200 rounded-2xl p-4 min-w-fit text-center hover:shadow-md hover:-translate-y-1 transition-all">
-                                <div class="font-bold text-gray-700 mb-2 text-sm">${time}</div>
-                                <img src="${weatherIcon}" alt="${hour.weather[0].description}" class="w-10 h-10 mx-auto">
-                                <div class="text-xl font-bold text-blue-600 mb-2">${temp}°C</div>
-                                <div class="text-cyan-600 text-sm">🌧️ ${rainChance}%</div>
-                            </div>
-                        `
+  <div class="bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200 rounded-2xl p-4 w-full text-center hover:shadow-md hover:-translate-y-1 transition-all">
+      <div class="font-bold text-gray-700 mb-2 text-sm">${time}</div>
+      <img src="${weatherIcon}" alt="${hour.weather[0].description}" class="w-10 h-10 mx-auto">
+      <div class="text-xl font-bold text-blue-600 mb-2">${temp}°C</div>
+      <div class="text-cyan-600 text-sm">🌧️ ${rainChance}%</div>
+  </div>
+`
+
       })
     })
     .catch((error) => console.error("Error fetching hourly forecast:", error))

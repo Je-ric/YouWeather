@@ -1,16 +1,32 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="./style.css" rel="stylesheet">
-    <title>YouWeather</title>
-  </head>
-  <body class="bg-gradient-to-br from-blue-50 via-sky-100 to-blue-100 text-gray-900 min-h-screen overflow-x-hidden font-sans">
-     <div class="max-w-6xl mx-auto px-4 md:px-8 py-8">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="./style.css" rel="stylesheet">
+        <title>YouWeather</title>
+        <script>
+            tailwind.config = {
+                theme: {
+                extend: {
+                    colors: {
+                    primary: '#3B82F6',
+                    accent: '#06B6D4',
+                    highlight: '#FDE68A',
+                    success: '#22C55E',
+                    alert: '#F87171',
+                    bgsoft: '#F0F9FF',
+                    },
+                },
+                },
+            }
+        </script>
+    </head>
+    <body class="bg-gradient-to-br from-blue-50 via-sky-100 to-blue-100 text-gray-900 min-h-screen overflow-x-hidden">
+        <div class="max-w-6xl mx-auto px-4 md:px-8 py-8">
         <header class="text-center mb-12 animate-fade-in-down">
             <h1 class="text-5xl md:text-7xl font-black bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent mb-2 leading-tight">YouWeather</h1>
             <p class="text-lg text-gray-600 tracking-wide">Weather Forecast & Agricultural Education</p>
@@ -53,7 +69,7 @@
             <div class="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-800">
                 <i class='bx bx-time-five text-cyan-500'></i> Hourly Forecast
             </div>
-            <div class="overflow-x-auto flex gap-4 pb-4 scroll-smooth" id="hourlyForecast"></div>
+            <div class="flex gap-4 pb-4 scroll-smooth" id="hourlyForecast"></div>
         </div>
 
         <div class="bg-white/80 backdrop-blur-md border border-blue-100 rounded-3xl p-8 mb-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up">
