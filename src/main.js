@@ -1,6 +1,7 @@
 import './style.css';
 
-const JOKE = import.meta.env.VITE_JOKE_KEY
+// const JOKE = import.meta.env.VITE_JOKE_KEY
+const JOKE = "9505fd1df737e20152fbd78cdb289b6a"
 const form = document.getElementById("weatherForm")
 const cityInput = document.getElementById("cityInput")
 const provinceInput = document.getElementById("provinceInput")
