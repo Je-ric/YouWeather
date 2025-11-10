@@ -1,7 +1,7 @@
 import './style.css';
 
 function proxy(url) {
-  return `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
+  return `https://corsproxy.io/?${encodeURIComponent(url)}`;
 }
 
 // const JOKE = import.meta.env.VITE_JOKE_KEY
