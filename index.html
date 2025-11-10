@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="./style.css" rel="stylesheet">
+        <title>YouWeather</title>
+        <script>
+            tailwind.config = {
+                theme: {
+                extend: {
+                    colors: {
+                    primary: '#3B82F6',
+                    accent: '#06B6D4',
+                    highlight: '#FDE68A',
+                    success: '#22C55E',
+                    alert: '#F87171',
+                    bgsoft: '#F0F9FF',
+                    },
+                },
+                },
+            }
+        </script>
+      <script type="module" crossorigin src="/assets/index-DD2DGk2h.js"></script>
+    </head>
+    <body class="bg-gradient-to-br from-blue-200 via-sky-300 to-blue-400 text-gray-900 min-h-screen overflow-x-hidden">
+
+        <nav class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-blue-100 shadow-sm">
+            <div class="max-w-6xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
+                <h1 class="text-2xl font-black bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent"> YouWeather </h1>
+                <ul class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
+                    <li>
+                        <a href="#weatherResults" class="hover:text-cyan-500 transition">Forecast</a>
+                    </li>
+                    <li>
+                        <a href="#advisory" class="hover:text-cyan-500 transition">Advisory</a>
+                    </li>
+                    <li>
+                        <a href="#pinnedLocations" class="hover:text-cyan-500 transition">Pinned</a>
+                    </li>
+                    <li>
+                        <a href="#learningGuide" class="hover:text-cyan-500 transition">Learning</a>
+                    </li>
+                    
+                </ul>
+        
+                <button class="md:hidden text-2xl text-cyan-500">
+                    <i class='bx bx-menu'></i>
+                </button>
+            </div>
+        </nav>
+        
+        <div class="fixed top-16 left-0 w-full z-40 flex justify-center px-4 mt-5">
+            <div class="bg-white/90 backdrop-blur-md border border-blue-100 rounded-full shadow-md px-6 py-3 max-w-4xl w-full flex flex-wrap items-center justify-center gap-2 transition-all hover:shadow-lg">
+                <form id="weatherForm" class="w-full flex flex-wrap items-center gap-2">
+                    <input type="text" id="cityInput" class="flex-1 min-w-[120px] px-4 py-2 bg-blue-50 border border-blue-200 rounded-full text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:bg-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200 transition-all" placeholder="City">
+                    <input type="text" id="provinceInput" class="flex-1 min-w-[120px] px-4 py-2 bg-blue-50 border border-blue-200 rounded-full text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:bg-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200 transition-all" placeholder="Province">
+                    <button type="submit" class="bg-gradient-to-r from-blue-500 to-cyan-400 text-white rounded-full px-4 py-2 text-sm font-medium flex items-center gap-1 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5">
+                        <i class='bx bx-search text-lg'></i>
+                        <span class="hidden sm:inline">Search</span>
+                    </button>
+                    <button id="locationBtn" type="button" class="bg-gradient-to-r from-blue-400 to-cyan-300 text-white rounded-full px-4 py-2 text-sm font-medium flex items-center gap-1 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5">
+                        <i class='bx bx-current-location text-lg'></i>
+                        <span class="hidden sm:inline">My Location</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <!-- Spacer to prevent content from hiding behind fixed elements -->
+        <div class="h-44"></div>
+
+
+
+        <!-- <header class="text-center mb-12 animate-fade-in-down">
+            <h1 class="text-5xl md:text-7xl font-black bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent mb-2 leading-tight">YouWeather</h1>
+            <p class="text-lg text-gray-600 tracking-wide">Weather Forecast & Agricultural Education</p>
+        </header>
+        
+        <div class="bg-white/80 backdrop-blur-md border border-blue-100 rounded-3xl p-8 mb-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up">
+            <div class="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-800">
+                <i class='bx bx-search text-cyan-500'></i> Check the Weather
+            </div>
+            <form id="weatherForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-4">
+                <input type="text" id="cityInput" class="col-span-1 md:col-span-1 lg:col-span-2 px-5 py-3 bg-blue-50 border-2 border-blue-300 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:bg-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-200 transition-all" placeholder="Enter city name...">
+                <input type="text" id="provinceInput" class="col-span-1 px-5 py-3 bg-blue-50 border-2 border-blue-300 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:bg-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-200 transition-all" placeholder="Province (optional)">
+                <button type="submit" class="col-span-1 bg-gradient-to-r from-blue-500 to-cyan-400 text-white border-0 rounded-2xl px-6 py-3 font-semibold cursor-pointer flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"><i class='bx bx-search'></i> Search</button>
+                <button id="locationBtn" type="button" class="col-span-1 bg-gradient-to-r from-blue-400 to-cyan-300 text-white border-0 rounded-2xl px-6 py-3 font-semibold cursor-pointer flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"><i class='bx bx-current-location'></i> My Location</button>
+            </form>
+            <p class="text-sm text-gray-600 mt-2">💡 Tip: Enter city and province for the most accurate results</p>
+        </div>  -->
+
+
+    <div class="max-w-8xl mx-auto px-4 md:px-8 py-8 pt-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white/80 backdrop-blur-md border-2 border-blue-500 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up relative overflow-hidden" 
+                    id="weatherResults">
+                    <!--  -->
+                </div>
+
+                <div class="bg-white/80 backdrop-blur-md border-2 border-blue-500 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up" 
+                    id="weatherResults2">
+                    <!--  -->
+                    
+                </div>
+            </div>
+            
+            <div class="bg-white/80 backdrop-blur-md border-2 border-blue-500 rounded-3xl p-8 mb-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up">
+                <div class="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-800">
+                    <i class='bx bx-map-pin text-cyan-500'></i> Pinned Locations (Max: 3)
+                </div>
+                <p class="text-gray-600 text-sm mb-4">Tap to view forecast</p>
+                <div id="pinnedLocations" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+    
+            <div id="advisory" 
+                class="bg-gradient-to-r from-amber-50 via-yellow-100 to-green-50 border-l-4 border-amber-400 rounded-3xl p-6 mb-8 flex gap-4 items-start shadow-md hover:shadow-lg transition-all duration-300 animate-slide-in-left">
+                
+                <div class="flex-shrink-0 mt-1">
+                    <div class="bg-amber-200/40 rounded-full p-3 flex items-center justify-center">
+                        <i class='bx bx-info-circle text-2xl text-amber-600'></i>
+                    </div>
+                </div>
+                
+                <div class="flex-1">
+                    <div class="font-extrabold text-gray-900 text-lg mb-2"> Farming Advisory</div>
+                    <p class="text-gray-700 leading-relaxed text-sm sm:text-base">
+                        Select a location to view <span class="font-semibold text-amber-600">personalized agricultural advisories</span>.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="bg-white/80 backdrop-blur-md border-2 border-blue-500 rounded-3xl p-8 mb-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up">
+                <div class="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-800">
+                    <i class='bx bx-time-five text-cyan-500'></i> Hourly Forecast
+                </div>
+                <div class="flex gap-4 pb-4 scroll-smooth" id="hourlyForecast"></div>
+            </div>
+    
+            <div class="bg-white/80 backdrop-blur-md border-2 border-blue-500 rounded-3xl p-8 mb-8 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up">
+                <div class="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-800">
+                    <i class='bx bx-calendar text-cyan-500'></i> 7-Day Forecast
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6" id="weeklyForecast"></div>
+            </div>
+    
+    </div>
+
+
+        <!-- ========================================================================================================= 
+            =========================================================================================================
+            ================================= Weather & Agriculture Learning Guide ==================================
+            ========================================================================================================= 
+            =========================================================================================================  -->
+
+            
+        <div class="max-w-8xl mx-auto px-4 md:px-8 py-8">
+
+        <div id="learningGuide"
+            class="bg-white/80 backdrop-blur-md border border-blue-100 rounded-3xl p-10 mt-12">
+            <div class="text-2xl font-bold mb-8 flex items-center gap-3 text-gray-800">
+                <i class='bx bx-book-open text-cyan-500'></i> Weather & Agriculture Learning Guide
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-12">
+                <div class="bg-blue-50 border-2 border-blue-200 border-l-4 border-l-blue-500 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
+                    <div class="text-xl font-bold text-cyan-600 mb-4 flex items-center gap-2">
+                        <i class='bx bx-bar-chart-alt-2'></i> Atmospheric Pressure (hPa)    
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">🔻 Below 1000 hPa:</strong> Low pressure systems bring rain and storms. Monitor crop irrigation schedules.</span></li>
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">🔺 1000-1015 hPa:</strong> Transitional pressure - variable weather conditions.</span></li>
+                        <li class="pb-0"><span class="text-gray-700"><strong class="text-amber-600">🔺 Above 1015 hPa:</strong> High pressure systems ensure clear, dry weather. Ideal for field work and harvesting.</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 border-2 border-cyan-200 border-l-4 border-l-cyan-500 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
+                    <div class="text-xl font-bold text-cyan-600 mb-4 flex items-center gap-2">
+                        <i class='bx bx-droplet'></i> Humidity Level (%)
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">🌿 Below 40%:</strong> Dry air - plants lose moisture rapidly. Increase watering frequency.</span></li>
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">💧 40-70%:</strong> Moderate humidity - optimal range for most crops.</span></li>
+                        <li class="pb-0"><span class="text-gray-700"><strong class="text-amber-600">🌧️ Above 80%:</strong> High humidity risk - watch for fungal diseases, mold, and pest infestations.</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 border-2 border-amber-200 border-l-4 border-l-amber-500 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
+                    <div class="text-xl font-bold text-cyan-600 mb-4 flex items-center gap-2">
+                        <i class='bx bx-cloud-rain'></i> Precipitation (mm)
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">0 mm:</strong> No rainfall expected.</span></li>
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">1-5 mm:</strong> Light rain - gentle watering, slightly moistens soil.</span></li>
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">5-10 mm:</strong> Moderate rain - adequate moisture for crops.</span></li>
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">10-20 mm:</strong> Heavy rain - noticeable wet conditions, check drainage.</span></li>
+                        <li class="pb-0"><span class="text-gray-700"><strong class="text-amber-600">20+ mm:</strong> Very heavy rain - potential flooding risk, secure equipment.</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 border-2 border-indigo-200 border-l-4 border-l-indigo-500 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
+                    <div class="text-xl font-bold text-cyan-600 mb-4 flex items-center gap-2">
+                        <i class='bx bx-water'></i> Rain Probability (%)
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">0-20%:</strong> Very unlikely to rain - proceed with outdoor plans.</span></li>
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">30-50%:</strong> Possible scattered showers - have backup plans ready.</span></li>
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">60-80%:</strong> Likely rain - bring umbrella ☂️ and secure crops.</span></li>
+                        <li class="pb-0"><span class="text-gray-700"><strong class="text-amber-600">90-100%:</strong> Almost certain rain - postpone fieldwork, prepare for storms.</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 border-2 border-purple-200 border-l-4 border-l-purple-500 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
+                    <div class="text-xl font-bold text-cyan-600 mb-4 flex items-center gap-2">
+                        <i class='bx bx-wind'></i> Wind Speed (Km/H)
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">0-10 Km/H:</strong> Calm/Light winds - safe for all agricultural activities.</span></li>
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">10-20 Km/H:</strong> Moderate winds - suitable for most field operations.</span></li>
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">20-40 Km/H:</strong> Strong winds - crops may be stressed, secure structures.</span></li>
+                        <li class="pb-0"><span class="text-gray-700"><strong class="text-amber-600">40+ Km/H:</strong> Very strong winds/storms - do not work outdoors, protect equipment.</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 border-2 border-red-200 border-l-4 border-l-red-500 rounded-2xl p-7 hover:shadow-md hover:-translate-y-1 transition-all">
+                    <div class="text-xl font-bold text-cyan-600 mb-4 flex items-center gap-2">
+                        <i class='bx bx-thermometer'></i> Temperature (°C)
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">Below 0°C:</strong> Frost risk - protect sensitive plants and crops from freezing.</span></li>
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">0-10°C:</strong> Cold - slow growth, ideal for cool-season crops.</span></li>
+                        <li class="pb-3 border-b border-blue-100"><span class="text-gray-700"><strong class="text-amber-600">10-25°C:</strong> Comfortable range - optimal growing conditions for most crops.</span></li>
+                        <li class="pb-0"><span class="text-gray-700"><strong class="text-amber-600">Above 35°C:</strong> Extreme heat - protect livestock, increase irrigation, apply mulch.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-8 mt-8 border-t border-blue-200">
+                <h3 class="text-2xl font-bold text-cyan-600 mb-6 flex items-center gap-2">
+                    <i class='bx bx-light-bulb-alt'></i> Weather & Farming Insights
+                </h3>
+                <div class="grid grid-cols-1 gap-6">
+                    <!-- Precipitation vs Rain Chance -->
+                    <div class="bg-gradient-to-r from-blue-100 to-blue-200 p-6 rounded-2xl border-l-4 border-blue-500 shadow-md hover:shadow-lg hover:-translate-y-1 transition-transform duration-300">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class='bx bx-bar-chart-alt-2 text-blue-600 text-2xl'></i>
+                            <span class="font-semibold text-blue-700 text-lg">Precipitation vs Rain Chance</span>
+                        </div>
+                        <p class="text-gray-800 text-sm leading-relaxed">
+                            Precipitation shows how much rain will fall (mm). Rain Chance shows the probability it will rain (%).
+                        </p>
+                    </div>
+
+                    <!-- Example Scenarios -->
+                    <div class="bg-gradient-to-r from-cyan-50 to-cyan-100 p-6 rounded-2xl border-l-4 border-cyan-500 shadow-md hover:shadow-lg hover:-translate-y-1 transition-transform duration-300">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class='bx bx-notepad text-cyan-600 text-2xl'></i>
+                            <span class="font-semibold text-cyan-700 text-lg">Example Scenarios</span>
+                        </div>
+                        <p class="text-gray-800 text-sm leading-relaxed">
+                            20% chance & 0mm = Cloudy but dry. 80% chance & 5mm = Light rain likely. 90% chance & 30mm = Heavy rain expected.
+                        </p>
+                    </div>
+
+                    <!-- Agricultural Focus -->
+                    <div class="bg-gradient-to-r from-green-50 to-green-100 p-6 rounded-2xl border-l-4 border-green-500 shadow-md hover:shadow-lg hover:-translate-y-1 transition-transform duration-300">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class='bx bx-leaf text-green-600 text-2xl'></i>
+                            <span class="font-semibold text-green-700 text-lg">Agricultural Focus</span>
+                        </div>
+                        <p class="text-gray-800 text-sm leading-relaxed">
+                            Use this data to plan irrigation, pest management, harvesting, and crop protection strategies.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+</body>
+</html>
