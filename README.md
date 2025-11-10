@@ -1,4 +1,4 @@
-# YouWeather 🌦️
+# YouWeather
 
 A modern web app that provides **weather forecasts** and **agricultural advisories** to help farmers and enthusiasts make informed decisions. Built with **Vite**, **Vanilla JavaScript**, and **OpenWeatherMap API**.
 
@@ -19,9 +19,9 @@ A modern web app that provides **weather forecasts** and **agricultural advisori
 
 ## Screenshots
 
-![Main Weather Screen](screenshots/weather-main.png)  
-![Hourly Forecast](screenshots/hourly-forecast.png)  
-![Agricultural Guide](screenshots/agriculture-guide.png)
+![Main Weather Screen](public/screenshots/Main.png)  
+![Hourly Forecast](public/screenshots/Advisory.png)  
+![Agricultural Guide](public/screenshots/LearningGuide.png)
 
 ---
 
@@ -56,30 +56,13 @@ A modern web app that provides **weather forecasts** and **agricultural advisori
 
 ---
 
-## Future Enhancements
-
-- 🌐 Multi-country support  
-- 🌦️ Severe weather alerts  
-- 📊 Historical weather data charts  
-- 🌱 More detailed agricultural recommendations  
-- 🖥️ Responsive improvements for mobile and tablet  
-- 🎨 Optional dark mode / light mode toggle  
-- ⚡ Performance optimizations and caching  
-
----
-
-## License
-
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
-
----
-
 ## Acknowledgements
 
 - [OpenWeatherMap API](https://openweathermap.org/api) for weather data  
 - [BoxIcons](https://boxicons.com/) for icons  
 - [Vite](https://vitejs.dev/) for build tooling  
 - Inspired by modern weather and agricultural apps  
+- This is supposed for Youmanitarian International Organizational Website. But for some reasons...
 
 ---
 
