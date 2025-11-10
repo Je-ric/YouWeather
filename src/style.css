@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
+
+[id] {
+  scroll-margin-top: 50vh;
+  scroll-margin-bottom: 50vh;
+}
+
+
 @keyframes fadeInDown {
   from {
     opacity: 0;
@@ -45,7 +56,7 @@
   animation: slideInLeft 0.6s ease-out;
 }
 
-/* Custom scrollbar styling */
+
 #hourlyForecast::-webkit-scrollbar {
   height: 6px;
 }

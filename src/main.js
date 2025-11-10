@@ -81,30 +81,27 @@ function displayWeather(data) {
   const weatherInfo = getFriendlyWeatherDescription(data.weather[0].description)
 
 weatherResults.innerHTML = `
-  <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 pb-6 border-b border-blue-100">
+  <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-4 pb-4 border-b border-blue-100">
     <!-- Location & Date -->
     <div>
-      <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-1">${data.name}, ${data.sys.country}</h2>
-      <p class="text-gray-600">${formattedDate}</p>
+      <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-1">${data.name}, ${data.sys.country}</h2>
+      <p class="text-gray-500 text-sm">${formattedDate}</p>
+      <div class="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent drop-shadow-md">
+      ${data.main.temp.toFixed(0)}°C
+    </div>
+    <div class="flex items-center gap-2 text-gray-700 font-semibold text-lg md:text-xl">
+      <i class='bx bx-sun text-yellow-400 text-2xl'></i> ${weatherInfo.text}
+    </div>
+    <p class="text-gray-400 text-xs md:text-sm">Updated at ${formattedTime}</p>
     </div>
 
     <!-- Weather Icon -->
-    <div class="bg-gradient-to-br from-blue-100 to-cyan-100 p-4 rounded-2xl shadow-md">
-      <img src="${weatherInfo.image}" alt="${weatherInfo.text}" class="w-40 h-40 object-contain">
+    <div class="bg-gradient-to-br from-blue-100 to-cyan-100 p-3 rounded-xl shadow-md">
+      <img src="${weatherInfo.image}" alt="${weatherInfo.text}" class="w-28 h-28 md:w-36 md:h-36 object-contain">
     </div>
   </div>
-
-  <!-- Main Temperature -->
-  <div class="mb-8 flex flex-col items-start md:items-center">
-    <div class="text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent mb-2 drop-shadow-md">
-      ${data.main.temp.toFixed(0)}°C
-    </div>
-    <div class="text-2xl md:text-3xl text-gray-700 flex items-center gap-2 font-semibold">
-      <i class='bx bx-sun text-yellow-400'></i> ${weatherInfo.text}
-    </div>
-    <p class="text-gray-500 text-sm mt-2">Updated at ${formattedTime}</p>
-  </div>
-`
+  
+`;
 
 
   getWeeklyForecast(data.coord.lat, data.coord.lon)
@@ -123,91 +120,39 @@ function displayWeather2(data) {
     .then((forecastData) => {
       const rainChance = forecastData.list[0].pop ? (forecastData.list[0].pop * 100).toFixed(0) : "0"
 
-     weatherResults2.innerHTML = `
-  <div class="flex flex-col h-full">
-    <!-- Header -->
-    <div class="text-2xl font-bold mb-4 flex items-center gap-3 text-gray-800">
-      <i class='bx bx-info-circle text-cyan-500'></i> Weather Details
-    </div>
-
-    <!-- Metrics -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 divide-y sm:divide-y-0 sm:divide-x divide-blue-200 border-t border-b border-blue-100 rounded-xl overflow-hidden">
-      
-      <!-- Feels Like -->
-      <div class="flex items-start gap-4 p-4">
-        <div class="text-3xl text-cyan-500 flex-shrink-0 mt-1"><i class='bx bxs-sun'></i></div>
-        <div>
-          <p class="text-gray-600 text-sm mb-1 font-semibold">Feels Like</p>
-          <p class="text-2xl font-bold text-gray-900">${data.main.feels_like.toFixed(1)}°C</p>
-        </div>
-      </div>
-
-      <!-- Humidity -->
-      <div class="flex items-start gap-4 p-4">
-        <div class="text-3xl text-cyan-500 flex-shrink-0 mt-1"><i class='bx bx-droplet'></i></div>
-        <div>
-          <p class="text-gray-600 text-sm mb-1 font-semibold">Humidity</p>
-          <p class="text-2xl font-bold text-gray-900">${data.main.humidity}%</p>
-        </div>
-      </div>
-
-      <!-- Pressure -->
-      <div class="flex items-start gap-4 p-4">
-        <div class="text-3xl text-cyan-500 flex-shrink-0 mt-1"><i class='bx bx-bar-chart-alt-2'></i></div>
-        <div>
-          <p class="text-gray-600 text-sm mb-1 font-semibold">Pressure</p>
-          <p class="text-2xl font-bold text-gray-900">${data.main.pressure} mb</p>
-        </div>
-      </div>
-
-      <!-- Wind -->
-      <div class="flex items-start gap-4 p-4">
-        <div class="text-3xl text-cyan-500 flex-shrink-0 mt-1"><i class='bx bx-wind'></i></div>
-        <div>
-          <p class="text-gray-600 text-sm mb-1 font-semibold">Wind Speed</p>
-          <p class="text-2xl font-bold text-gray-900">${(data.wind.speed * 3.6).toFixed(1)} Km/H</p>
-        </div>
-      </div>
-
-      <!-- Precipitation -->
-      <div class="flex items-start gap-4 p-4">
-        <div class="text-3xl text-cyan-500 flex-shrink-0 mt-1"><i class='bx bx-cloud-rain'></i></div>
-        <div>
-          <p class="text-gray-600 text-sm mb-1 font-semibold">Precipitation</p>
-          <p class="text-2xl font-bold text-gray-900">${precipitation.toFixed(1)} mm</p>
-        </div>
-      </div>
-
-      <!-- Rain Chance -->
-      <div class="flex items-start gap-4 p-4">
-        <div class="text-3xl text-cyan-500 flex-shrink-0 mt-1"><i class='bx bx-water'></i></div>
-        <div>
-          <p class="text-gray-600 text-sm mb-1 font-semibold">Rain Chance</p>
-          <p class="text-2xl font-bold text-gray-900">${rainChance}%</p>
-        </div>
-      </div>
-
-      <!-- Sunrise -->
-      <div class="flex items-start gap-4 p-4">
-        <div class="text-3xl text-cyan-500 flex-shrink-0 mt-1"><i class='bx bxs-sun'></i></div>
-        <div>
-          <p class="text-gray-600 text-sm mb-1 font-semibold">Sunrise</p>
-          <p class="text-2xl font-bold text-gray-900">${sunrise}</p>
-        </div>
-      </div>
-
-      <!-- Sunset -->
-      <div class="flex items-start gap-4 p-4">
-        <div class="text-3xl text-cyan-500 flex-shrink-0 mt-1"><i class='bx bxs-moon'></i></div>
-        <div>
-          <p class="text-gray-600 text-sm mb-1 font-semibold">Sunset</p>
-          <p class="text-2xl font-bold text-gray-900">${sunset}</p>
-        </div>
-      </div>
-
-    </div>
+    weatherResults2.innerHTML = `
+<div class="flex flex-col h-full">
+  <!-- Header -->
+  <div class="text-xl font-bold mb-3 flex items-center gap-2 text-gray-800">
+    <i class='bx bx-info-circle text-cyan-500'></i> Weather Details
   </div>
-`
+
+  <!-- Metrics Grid -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+    
+    <!-- Metric Template -->
+    ${[
+      { icon: 'bxs-sun', label: 'Feels Like', value: `${data.main.feels_like.toFixed(1)}°C` },
+      { icon: 'bx-droplet', label: 'Humidity', value: `${data.main.humidity}%` },
+      { icon: 'bx-bar-chart-alt-2', label: 'Pressure', value: `${data.main.pressure} mb` },
+      { icon: 'bx-wind', label: 'Wind', value: `${(data.wind.speed * 3.6).toFixed(1)} Km/H` },
+      { icon: 'bx-cloud-rain', label: 'Precipitation', value: `${precipitation.toFixed(1)} mm` },
+      { icon: 'bx-water', label: 'Rain Chance', value: `${rainChance}%` },
+      { icon: 'bxs-sun', label: 'Sunrise', value: sunrise },
+      { icon: 'bxs-moon', label: 'Sunset', value: sunset }
+    ].map(metric => `
+      <div class="flex items-center gap-2 p-2 bg-white/70 rounded-xl shadow-sm hover:shadow-md transition">
+        <i class='bx ${metric.icon} text-cyan-500 text-xl flex-shrink-0'></i>
+        <div>
+          <p class="text-gray-600 text-xs md:text-sm font-medium">${metric.label}</p>
+          <p class="text-gray-900 font-bold text-sm md:text-base">${metric.value}</p>
+        </div>
+      </div>
+    `).join('')}
+    
+  </div>
+</div>
+`;
 
     })
 }
