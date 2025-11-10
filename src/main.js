@@ -121,79 +121,179 @@ function displayWeather2(data) {
       const rainChance = forecastData.list[0].pop ? (forecastData.list[0].pop * 100).toFixed(0) : "0"
 
     weatherResults2.innerHTML = `
-<div class="flex flex-col h-full">
-  <!-- Header -->
-  <div class="text-xl font-bold mb-3 flex items-center gap-2 text-gray-800">
-    <i class='bx bx-info-circle text-cyan-500'></i> Weather Details
-  </div>
+      <div class="flex flex-col h-full">
 
-  <!-- Metrics Grid -->
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-    
-    <!-- Metric Template -->
-    ${[
-      { icon: 'bxs-sun', label: 'Feels Like', value: `${data.main.feels_like.toFixed(1)}°C` },
-      { icon: 'bx-droplet', label: 'Humidity', value: `${data.main.humidity}%` },
-      { icon: 'bx-bar-chart-alt-2', label: 'Pressure', value: `${data.main.pressure} mb` },
-      { icon: 'bx-wind', label: 'Wind', value: `${(data.wind.speed * 3.6).toFixed(1)} Km/H` },
-      { icon: 'bx-cloud-rain', label: 'Precipitation', value: `${precipitation.toFixed(1)} mm` },
-      { icon: 'bx-water', label: 'Rain Chance', value: `${rainChance}%` },
-      { icon: 'bxs-sun', label: 'Sunrise', value: sunrise },
-      { icon: 'bxs-moon', label: 'Sunset', value: sunset }
-    ].map(metric => `
-      <div class="flex items-center gap-2 p-2 bg-white/70 rounded-xl shadow-sm hover:shadow-md transition">
-        <i class='bx ${metric.icon} text-cyan-500 text-xl flex-shrink-0'></i>
-        <div>
-          <p class="text-gray-600 text-xs md:text-sm font-medium">${metric.label}</p>
-          <p class="text-gray-900 font-bold text-sm md:text-base">${metric.value}</p>
+        <div class="text-xl font-bold mb-3 flex items-center gap-2 text-gray-800">
+          <i class='bx bx-info-circle text-cyan-500'></i> Weather Details
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+          
+          ${[
+            { icon: 'bxs-sun', label: 'Feels Like', value: `${data.main.feels_like.toFixed(1)}°C` },
+            { icon: 'bx-droplet', label: 'Humidity', value: `${data.main.humidity}%` },
+            { icon: 'bx-bar-chart-alt-2', label: 'Pressure', value: `${data.main.pressure} mb` },
+            { icon: 'bx-wind', label: 'Wind', value: `${(data.wind.speed * 3.6).toFixed(1)} Km/H` },
+            { icon: 'bx-cloud-rain', label: 'Precipitation', value: `${precipitation.toFixed(1)} mm` },
+            { icon: 'bx-water', label: 'Rain Chance', value: `${rainChance}%` },
+            { icon: 'bxs-sun', label: 'Sunrise', value: sunrise },
+            { icon: 'bxs-moon', label: 'Sunset', value: sunset }
+          ].map(metric => `
+            <div class="flex items-center gap-2 p-2 bg-white/70 rounded-xl shadow-sm hover:shadow-md transition">
+              <i class='bx ${metric.icon} text-cyan-500 text-xl flex-shrink-0'></i>
+              <div>
+                <p class="text-gray-600 text-xs md:text-sm font-medium">${metric.label}</p>
+                <p class="text-gray-900 font-bold text-sm md:text-base">${metric.value}</p>
+              </div>
+            </div>
+          `).join('')}
+          
         </div>
       </div>
-    `).join('')}
-    
-  </div>
-</div>
-`;
-
+      
+      `;
+      
     })
+
+
 }
 
-function displayAdvisory(data) {
-  const temp = data.main.temp
-  const wind = data.wind.speed
-  const humidity = data.main.humidity
-  const weather = data.weather[0].main.toLowerCase()
-  let message = ""
-  let icon = "bx-info-circle"
+function displayAdvisory(data, forecastData) {
+  const temp = data.main.temp;
+  const wind = data.wind.speed;
+  const gust = data.wind.gust ?? 0;
+  const humidity = data.main.humidity;
+  const weather = data.weather[0].main.toLowerCase();
+  const precipitation1h = data.rain ? (data.rain["1h"] || 0) : 0;
+  const pop = forecastData?.list?.[0]?.pop ? (forecastData.list[0].pop * 100) : 0;
+  const cloudCover = data.clouds?.all ?? 0;  // in % if available
 
-  if (weather.includes("rain")) {
-    message = "High rainfall expected - postpone field operations and ensure proper drainage for crops."
-    icon = "bx-cloud-rain"
-  } else if (temp > 35) {
-    message =
-      "Extreme heat warning - provide shade for livestock, increase irrigation, and monitor crops for heat stress."
-    icon = "bx-hot"
-  } else if (wind > 10) {
-    message = "High winds detected - secure equipment, support tall crops, and monitor for wind damage."
-    icon = "bx-wind"
-  } else if (humidity > 85) {
-    message = "Very high humidity - watch for fungal diseases and increase ventilation around crops."
-    icon = "bx-droplet"
-  } else if (humidity < 30) {
-    message = "Very dry conditions - increase irrigation frequency to prevent crop stress."
-    icon = "bx-sun"
-  } else {
-    message = "Favorable conditions - excellent day for field work and crop maintenance."
-    icon = "bx-smile"
+  const advisories = [];
+
+  // 1. Heavy rainfall / waterlogging risk  
+  if (precipitation1h > 15) {
+    advisories.push("Heavy rainfall detected — ensure drainage, delay fertilizer application, and protect crops from standing water.");
   }
 
+  // 2. Prolonged dry + high temp + low humidity → drought stress  
+  if (humidity < 30 && temp > 30 && precipitation1h === 0) {
+    advisories.push("Very dry and hot conditions — increase irrigation frequency and apply mulch to reduce water loss.");
+  }
+
+  // 3. High humidity + moderate temp → disease risk  
+  if (humidity > 85 && temp > 15 && temp < 30) {
+    advisories.push("Warm and humid conditions favour fungal/bacterial diseases — inspect crops for leaf spots, blight, and ensure good ventilation.");
+  }
+
+  // 4. Strong wind + rain → lodging / physical damage  
+  if (wind > 12 && precipitation1h > 5) {
+    advisories.push("High winds and rainfall — tall crops may lodge, secure equipment, delay spraying operations.");
+  }
+
+  // 5. Extreme heat  
+  if (temp > 35) {
+    advisories.push("Extreme heat warning — provide shade for livestock, increase irrigation, and monitor crops for heat stress.");
+  }
+
+  // 6. Frost / near‑freezing risk  
+  if (temp < 2) {
+    advisories.push("Frost or freezing risk — cover sensitive crops, harvest early if possible, protect from cold damage.");
+  }
+
+  // 7. Cloud cover + low sunshine hours during flowering stage  
+  if (cloudCover > 80 && temp > 20 && precipitation1h > 0) {
+    advisories.push("Heavy cloud cover and rain during flowering/pollination can reduce yield and quality — consider delaying operations or adjusting crop management.");
+  }
+
+  // 8. High rain probability upcoming (POP)  
+  if (pop > 70) {
+    advisories.push("High chance of rain ahead (>70%) — postpone fieldwork, protect harvested produce and leach nutrients from saturated soils.");
+  }
+
+  // 9. Low wind + heavy rainfall → waterlogging risk  
+  if (wind < 3 && precipitation1h > 10) {
+    advisories.push("Rainfall with minimal wind may result in poor drying conditions and water‑logging — ensure fields drain properly.");
+  }
+
+  // 10. High wind gusts (even if average wind moderate) → crop damage / wind stress  
+  if (gust > 15) {
+    advisories.push("High wind gusts detected — risk of lodging, crop breakage and spray drift; secure structures and postpone sensitive operations.");
+  }
+
+  // 11. Very low humidity + moderate temp → stress on crops / increased transpiration  
+  if (humidity < 25 && temp > 20 && temp < 30) {
+    advisories.push("Very low humidity with moderate temperature — crops may lose moisture quickly, increase irrigation or shade where possible.");
+  }
+
+  // 12. Precipitation + high humidity → fungal risk, nutrient leaching  
+  if (precipitation1h > 5 && humidity > 80) {
+    advisories.push("Rain and high humidity together increase risk of fungal diseases and nutrient leaching — monitor soil fertility and crop health.");
+  }
+
+  // 13. Cold night following warm day (temp drop)  
+  // (assume you have minTemp for day)  
+  const minTemp = data.main.temp_min;
+  if (minTemp < 5 && temp > 20) {
+    advisories.push("Sudden drop in night temperature following warm day — risk of crop stress and frost pockets, especially in low‑lying fields.");
+  }
+
+  // 14. High temperature + wind + low humidity → fire risk (pasture/crop residue)  
+  if (temp > 33 && wind > 10 && humidity < 30) {
+    advisories.push("Hot, windy and dry conditions — elevated risk of fire in crop residues or pastures; clear debris and monitor flammable zones.");
+  }
+
+  // 15. Excessive rainfall leading to soil erosion or nutrient loss  
+  if (precipitation1h > 20) {
+    advisories.push("Excessive rainfall — soil erosion and nutrient loss likely, implement soil conservation practices and secure vulnerable slopes.");
+  }
+
+  // 16. High humidity + low wind + moderate rain → stagnant air risk (disease, pest increase)  
+  if (humidity > 80 && wind < 2 && precipitation1h > 2) {
+    advisories.push("Stagnant humid air with light rain — increased pest and disease pressure; inspect crops and consider ventilation or treatment.");
+  }
+
+  // 17. Heavy rainfall + muddy field conditions → delayed harvest or planting  
+  if (precipitation1h > 8 && wind < 4) {
+    advisories.push("Fields could become muddy and inaccessible — postpone harvesting or planting to avoid soil compaction and yield loss.");
+  }
+
+  // 18. Low cloud cover + very high solar radiation + high temperature → heat stress in livestock and crops  
+  if (cloudCover < 10 && temp > 30 && humidity < 50) {
+    advisories.push("Clear skies with high temperature and low humidity — risk of heat stress on crops and livestock; provide shade and adequate water.");
+  }
+
+  // 19. Rain‑free forecast + high transpiration demand (humidity low, temp moderate) → irrigation planning  
+  if (precipitation1h === 0 && pop < 20 && humidity < 40 && temp > 22) {
+    advisories.push("No rain expected and high transpiration demand — schedule irrigation and monitor soil moisture carefully.");
+  }
+
+  // 20. Flood/typhoon storm scenario (extreme wind + extreme rainfall)  
+  if (wind > 20 && precipitation1h > 30) {
+    advisories.push("Severe storm/typhoon conditions — major risk of crop damage, flooding and infrastructure failure; evacuate equipment and implement emergency protocols.");
+  }
+
+  // 21. Moderate rainfall + strong cloud cover during planting stage → seed germination risk  
+  if (precipitation1h > 3 && cloudCover > 70 && temp > 18) {
+    advisories.push("Low light and moderate rainfall during planting/early germination stage — risk of poor seed emergence; ensure field drainage and consider delayed sowing.");
+  }
+
+  // At least one default advisory if none above  
+  if (advisories.length === 0) {
+    advisories.push("Conditions are generally favourable — good day for field work and crop maintenance.");
+  }
+
+  // Combine advisories into one HTML block  
+  const advisoryHtml = advisories.map(msg => `<p class="text-gray-700 mb-2">• ${msg}</p>`).join("");
+
   advisory.innerHTML = `
-                <i class='bx ${icon} text-3xl text-amber-500 flex-shrink-0 mt-1'></i>
-                <div class="flex-1">
-                    <div class="font-bold text-gray-900 mb-2">🌾 Farming Advisory</div>
-                    <p class="text-gray-700">${message}</p>
-                </div>
-            `
+    <i class='bx bx-info-circle text-3xl text-amber-500 flex-shrink-0 mt-1'></i>
+    <div class="flex-1">
+      <div class="font-bold text-gray-900 mb-2">🌾 Farming Advisory</div>
+      ${advisoryHtml}
+    </div>
+  `;
 }
+
 
 function displayHourlyForecast(lat, lon) {
   fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${JOKE}&units=metric`)
@@ -337,51 +437,50 @@ function removePinnedLocation(lat, lon) {
 }
 
 function displayPinnedLocations() {
-  pinnedLocationsDiv.innerHTML = ""
+  pinnedLocationsDiv.innerHTML = "";
 
   if (pinnedLocations.length === 0) {
     pinnedLocationsDiv.innerHTML =
-      '<div class="col-span-full text-center py-12 text-gray-600"><i class="bx bx-map-pin text-5xl mb-4 text-cyan-400 opacity-50"></i><p class="text-lg">No locations pinned yet. Pin a location to save it!</p></div>'
-    return
+      `<div class="col-span-full text-center py-12 text-gray-600">
+         <i class="bx bx-map-pin text-5xl mb-4 text-cyan-400 opacity-50"></i>
+         <p class="text-lg">No locations pinned yet. Pin a location to save it!</p>
+       </div>`;
+    return;
   }
 
   pinnedLocations.forEach((loc) => {
-    const locationDiv = document.createElement("div")
+    const locationDiv = document.createElement("div");
     locationDiv.classList.add(
-      "bg-gradient-to-br",
-      "from-blue-50",
-      "to-cyan-50",
+      "bg-white/70",
+      "backdrop-blur-md",
       "border",
       "border-blue-200",
-      "rounded-2xl",
-      "p-6",
+      "rounded-xl",
+      "p-3",
       "flex",
-      "flex-col",
-      "sm:flex-row",
-      "sm:justify-between",
-      "sm:items-center",
-      "gap-4",
+      "items-center",
+      "justify-between",
+      "gap-2",
       "hover:shadow-md",
       "transition-all",
-    )
+      "cursor-pointer"
+    );
 
     locationDiv.innerHTML = `
-                    <div>
-                        <div class="font-bold text-gray-900 text-lg">${loc.name}</div>
-                    </div>
-                    <div class="flex gap-3">
-                        <button onclick="getWeatherByCoords(${loc.lat}, ${loc.lon})" class="px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-400 text-white rounded-xl flex items-center gap-2 font-semibold hover:shadow-lg hover:-translate-y-0.5 transition-all text-sm">
-                            <i class="bx bx-calendar"></i> View
-                        </button>
-                        <button onclick="removePinnedLocation(${loc.lat}, ${loc.lon})" class="px-4 py-2 bg-gradient-to-r from-red-400 to-red-500 text-white rounded-xl flex items-center gap-2 font-semibold hover:shadow-lg hover:-translate-y-0.5 transition-all text-sm">
-                            <i class="bx bx-trash"></i> Remove
-                        </button>
-                    </div>
-                `
+      <div class="flex items-center gap-2">
+        <i class='bx bx-map-pin text-cyan-500 text-2xl'></i>
+        <span class="font-medium text-gray-800 text-sm">${loc.name}</span>
+      </div>
+      <div class="flex items-center gap-1">
+        <i onclick="getWeatherByCoords(${loc.lat}, ${loc.lon})" class='bx bx-calendar text-gray-500 hover:text-cyan-500 text-xl'></i>
+        <i onclick="removePinnedLocation(${loc.lat}, ${loc.lon})" class='bx bx-trash text-red-500 hover:text-red-600 text-xl'></i>
+      </div>
+    `;
 
-    pinnedLocationsDiv.appendChild(locationDiv)
-  })
+    pinnedLocationsDiv.appendChild(locationDiv);
+  });
 }
+
 
 document.addEventListener("DOMContentLoaded", displayPinnedLocations)
 
