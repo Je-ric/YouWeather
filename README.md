@@ -66,7 +66,7 @@ Additional:
 - [BoxIcons](https://boxicons.com/) for icons  
 - [Vite](https://vitejs.dev/) for build tooling  
 - Inspired by modern weather and agricultural apps  
-- This is supposed for Youmanitarian International Organizational Website. But for some reasons...
+- This is supposed for Youmanitarian International Organizational Website. But for some reasons, we just separate it and will connect in the future...
 
 ---
 
